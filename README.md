@@ -11,5 +11,25 @@
   - As a user I can type the number in arabic and if match get new number.
 
 # File Structure
+ ```
+ - Public
+     |__ index.html
+     
+- Src
+     |__ components
+              |_ header
+                    |_ index.js
+                    |_ header.css
+                    
+    |__ app.js
+    
+    |__ index.js
+
+- gitignore
+- package-lock.json
+- package.json
+- arabicNumbers.json
+- .babelrc
+```
 
 ![ww](https://user-images.githubusercontent.com/41734542/51908983-0c6cb300-23d4-11e9-9715-998728a47fa4.jpg)
