@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint src/",
+     "dev": "parcel public/index.html"
+
   },
   "repository": {
     "type": "git",
@@ -16,5 +19,16 @@
   "bugs": {
     "url": "https://github.com/FACK1/LearnNumbers/issues"
   },
-  "homepage": "https://github.com/FACK1/LearnNumbers#readme"
+  "homepage": "https://github.com/FACK1/LearnNumbers#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-react": "^7.0.0",
+    "babel-eslint": "^10.0.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "eslint": "^5.12.1",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-react": "^7.12.4",
+    "parcel-bundler": "^1.11.0"
+  }
 }
