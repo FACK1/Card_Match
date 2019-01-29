@@ -9,3 +9,7 @@
   - As a user I can see the timer during playing the game.
   - As a user I can see my game score.
   - As a user I can type the number in arabic and if match get new number.
+
+# File Structure
+
+![ww](https://user-images.githubusercontent.com/41734542/51908983-0c6cb300-23d4-11e9-9715-998728a47fa4.jpg)
