@@ -1,0 +1,15 @@
+.gameContainer {
+  margin-top: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column wrap;
+  width: 100%;
+}
+
+input {
+  margin-top: 300px;
+  width: 60%;
+  height: 100px;
+  font-size: 30px;
+}
