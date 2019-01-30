@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
 import FirstScreen from "./component/FirstScreen";
+import GameScreen from "./component/GameScreen";
 
 const oneMinute = 60000;
 
@@ -8,7 +9,7 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    const DEFAULT_STATE = {
+    this.state = {
       score: 0,
       currentNumber: "",
       remainingTime: oneMinute,
@@ -16,9 +17,16 @@ class App extends Component {
     };
   }
 
-  componentDidMount() {
-    this.endGame();
-  }
+  endGame = () => {
+    let resetState = {
+      gameStarted: false,
+      currentNumber: "",
+      remainingTime: oneMinute
+    };
+
+    clearInterval(this.remainingTimer);
+    this.setState(resetState);
+  };
 
   startTimer = () => {
     this.remainingTimer = setInterval(() => {
@@ -48,19 +56,48 @@ class App extends Component {
     });
   };
 
-  endGame = () => {
+  handleSuccess = answer => {
+    let number = 2; // for test
+    let score = this.state.score + 10;
+
     let newState = {
-      gameStarted: false,
-      currentNumber: "",
-      remainingTime: oneMinute
+      currentNumber: number,
+      score,
+      remainingTime
     };
 
-    clearInterval(this.remainingTimer);
     this.setState(newState);
   };
 
+  isCorrect = (response, answer) => {
+    return response === answer ? true : false;
+  };
+
+  handleAnswer = (response, answer) => {
+    if (this.isCorrect(response, answer)) {
+      this.handleSuccess(answer);
+    }
+  };
+
   render() {
-    return <FirstScreen startGame={this.startGame} />;
+    let numberProps = {
+      currentNumber: this.state.currentNumber,
+      answer: this.handleAnswer
+    };
+
+    let scoreProps = {
+      score: this.state.score,
+      remainingTime: this.state.remainingTime
+    };
+
+    return (
+      <div>
+        {!this.state.gameStarted && <FirstScreen startGame={this.startGame} />}
+        {this.state.gameStarted && (
+          <GameScreen numberProps={numberProps} scoreProps={scoreProps} />
+        )}
+      </div>
+    );
   }
 }
 

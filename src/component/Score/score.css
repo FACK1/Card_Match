@@ -1,0 +1,20 @@
+.score,
+.timer {
+  background-color: #e91e63;
+  color: #fff;
+  font-size: 50px;
+  border: none;
+  border-radius: 10rem;
+  width: 200%;
+  height: 100px;
+  text-align: center;
+  display: flex;
+  align-self: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.scoreNum {
+  font-size: 50px;
+  padding-left: 20px;
+}
