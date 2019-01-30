@@ -8,11 +8,18 @@ class GameScreen extends Component {
   enterKey = event => {
     let answer = this.props.numberProps.answer;
     if (event.which == 13) {
-      console.log(event.currentTarget.value);
-      console.log(this.props.numberProps.currentNumber);
-      //what we need to compare
+      answer(event.currentTarget.value, this.props.numberProps.currentNumber);
     }
   };
+
+  componentWillReceiveProps(nextProps) {
+    if (
+      this.props.numberProps.currentNumber !=
+      nextProps.numberProps.currentNumber
+    ) {
+      ReactDOM.findDOMNode(this.refs.input).value = "";
+    }
+  }
 
   render() {
     const { currentNumber, answer } = this.props.numberProps;
@@ -22,7 +29,9 @@ class GameScreen extends Component {
       <div className="gameContainer">
         <div>
           <Score score={score} timer={remainingTime} />
-          <h2>{this.props.numberProps.currentNumber}</h2>
+          <div className="numberContainer">
+            <p className="showNum">{this.props.numberProps.currentNumber}</p>
+          </div>
         </div>
 
         <input
@@ -30,7 +39,6 @@ class GameScreen extends Component {
           type="text"
           onKeyUp={this.enterKey}
           placeholder="Translate the number above in Arabic"
-          autofocus
         />
       </div>
     );
