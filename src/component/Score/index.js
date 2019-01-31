@@ -8,7 +8,7 @@ class Score extends Component {
     const { score, timer } = this.props;
 
     return (
-      <div>
+      <div className="labelsContainer">
         <div className="score">
           <p className="scoreNum">Score: </p>
           {score}

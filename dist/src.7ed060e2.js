@@ -24678,7 +24678,9 @@ function (_Component) {
       var _this$props = this.props,
           score = _this$props.score,
           timer = _this$props.timer;
-      return _react.default.createElement("div", null, _react.default.createElement("div", {
+      return _react.default.createElement("div", {
+        className: "labelsContainer"
+      }, _react.default.createElement("div", {
         className: "score"
       }, _react.default.createElement("p", {
         className: "scoreNum"
@@ -24756,8 +24758,7 @@ function (_Component) {
       var answer = _this.props.numberProps.answer;
 
       if (event.which == 13) {
-        console.log(event.currentTarget.value);
-        console.log(_this.props.numberProps.currentNumber); //what we need to compare
+        answer(event.currentTarget.value, _this.props.numberProps.currentNumber);
       }
     });
 
@@ -24765,6 +24766,13 @@ function (_Component) {
   }
 
   _createClass(GameScreen, [{
+    key: "componentWillReceiveProps",
+    value: function componentWillReceiveProps(nextProps) {
+      if (this.props.numberProps.currentNumber != nextProps.numberProps.currentNumber) {
+        _reactDom.default.findDOMNode(this.refs.input).value = "";
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this$props$numberPro = this.props.numberProps,
@@ -24778,12 +24786,15 @@ function (_Component) {
       }, _react.default.createElement("div", null, _react.default.createElement(_Score.default, {
         score: score,
         timer: remainingTime
-      }), _react.default.createElement("h2", null, this.props.numberProps.currentNumber)), _react.default.createElement("input", {
+      }), _react.default.createElement("div", {
+        className: "numberContainer"
+      }, _react.default.createElement("p", {
+        className: "showNum"
+      }, this.props.numberProps.currentNumber))), _react.default.createElement("input", {
         ref: "input",
         type: "text",
         onKeyUp: this.enterKey,
-        placeholder: "Translate the number above in Arabic",
-        autofocus: true
+        placeholder: "Translate the number above in Arabic"
       }));
     }
   }]);
@@ -24793,7 +24804,11 @@ function (_Component) {
 
 var _default = GameScreen;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","./gameScreen.css":"../src/component/GameScreen/gameScreen.css","../Score":"../src/component/Score/index.js"}],"../src/app.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","./gameScreen.css":"../src/component/GameScreen/gameScreen.css","../Score":"../src/component/Score/index.js"}],"../src/numbers.json":[function(require,module,exports) {
+module.exports = {
+  "numbers": ["صفر", "واحد", "اثنان", "ثلاثة", "اربعة", "خمسة", "ستة", "سبعة", "ثمانية", "تسعة", "عشرة", "احد عشر", "اثنا عشر", "ثلاثة عشر", "اربعة عشر", "خمسة عشر", "ستة عشر", "سبعة عشر", "ثمانية عشر", "تسعة عشر", "عشرون", "واحد وعشرون", "اثنان وعشرون", "ثلاثة وعشرون", "اربعة وعشرون", "خمسة وعشرون", "ستة وعشرون", "سبعة وعشرون", "ثمانية وعشرون", "تسعة وعشرون", "ثلاثون"]
+};
+},{}],"../src/app.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -24808,6 +24823,8 @@ var _reactDom = require("react-dom");
 var _FirstScreen = _interopRequireDefault(require("./component/FirstScreen"));
 
 var _GameScreen = _interopRequireDefault(require("./component/GameScreen"));
+
+var _numbers = require("./numbers.json");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -24873,13 +24890,13 @@ function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "startGame", function () {
-      var number = 1; // must be random later
+      var number = _this.getRandomNumber();
 
-      console.log("hiiiiiiii");
       var newState = {
         score: 0,
         currentNumber: number,
-        gameStarted: true
+        gameStarted: true,
+        remainingTime: oneMinute
       };
 
       _this.setState(newState, function () {
@@ -24887,10 +24904,11 @@ function (_Component) {
       });
     });
 
-    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "handleSuccess", function (answer) {
-      var number = 2; // for test
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "handleSuccess", function () {
+      var number = _this.getRandomNumber();
 
       var score = _this.state.score + 10;
+      var remainingTime = _this.state.remainingTime;
       var newState = {
         currentNumber: number,
         score: score,
@@ -24901,13 +24919,17 @@ function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "isCorrect", function (response, answer) {
-      return response === answer ? true : false;
+      return response === _numbers.numbers[answer] ? true : false;
     });
 
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "handleAnswer", function (response, answer) {
       if (_this.isCorrect(response, answer)) {
         _this.handleSuccess(answer);
       }
+    });
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "getRandomNumber", function () {
+      return Math.floor(Math.random() * Math.floor(31));
     });
 
     _this.state = {
@@ -24944,7 +24966,7 @@ function (_Component) {
 
 var _default = App;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","./component/FirstScreen":"../src/component/FirstScreen/index.js","./component/GameScreen":"../src/component/GameScreen/index.js"}],"../src/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","./component/FirstScreen":"../src/component/FirstScreen/index.js","./component/GameScreen":"../src/component/GameScreen/index.js","./numbers.json":"../src/numbers.json"}],"../src/index.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireWildcard(require("react"));
@@ -24985,7 +25007,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45347" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44715" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
