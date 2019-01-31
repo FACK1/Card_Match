@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { render } from "react-dom";
 import FirstScreen from "./component/FirstScreen";
 import GameScreen from "./component/GameScreen";
+import { numbers } from "./numbers.json";
 
 const oneMinute = 60000;
 
@@ -43,12 +44,12 @@ class App extends Component {
   };
 
   startGame = () => {
-    let number = 1; // must be random later
-    console.log("hiiiiiiii");
+    let number = this.getRandomNumber();
     let newState = {
       score: 0,
       currentNumber: number,
-      gameStarted: true
+      gameStarted: true,
+      remainingTime: oneMinute
     };
 
     this.setState(newState, () => {
@@ -56,9 +57,10 @@ class App extends Component {
     });
   };
 
-  handleSuccess = answer => {
-    let number = 2; // for test
+  handleSuccess = () => {
+    let number = this.getRandomNumber();
     let score = this.state.score + 10;
+    let remainingTime = this.state.remainingTime;
 
     let newState = {
       currentNumber: number,
@@ -70,13 +72,17 @@ class App extends Component {
   };
 
   isCorrect = (response, answer) => {
-    return response === answer ? true : false;
+    return response === numbers[answer] ? true : false;
   };
 
   handleAnswer = (response, answer) => {
     if (this.isCorrect(response, answer)) {
       this.handleSuccess(answer);
     }
+  };
+
+  getRandomNumber = () => {
+    return Math.floor(Math.random() * Math.floor(31));
   };
 
   render() {
