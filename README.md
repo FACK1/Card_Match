@@ -1,7 +1,7 @@
 # LearnNumbers
   A game that shows numbers in English language and the user have to translate as many numbers as possible into Arabic before the timer runs out.
 
-# Website Link : [Learn Numbers game](https://trusting-wing-e398f3.netlify.com//)
+# Website Link : [Learn Numbers game](https://cocky-chandrasekhar-f2db95.netlify.com//)
 
  # User Journeys 
   - As a user I can see a home page to start a game.
